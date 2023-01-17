@@ -60,7 +60,7 @@ const Card = ({type, video}) => {
     useEffect(()=> {
         const fetchChannel = async ()=>{
           // By using axios, we can send request to the API
-          const res = await axios.get(`/users/find/${video.userId}`);
+          const res = await axios.get(`/api/users/find/${video.userId}`);
 
           setChannel(res.data);
   

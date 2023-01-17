@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Comment from './Comment';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import Youtube from '../images/logo.png';
 
 const Container = styled.div`
 `;
@@ -36,7 +37,7 @@ const Comments = ({videoId}) => {
     useEffect(() => {
         const fetchComments = async () => {
             try{
-                const res = await axios.get(`/comments/${videoId}`);
+                const res = await axios.get(`/api/comments/${videoId}`);
                 setComments(res.data);
             }catch(err){}
         };
@@ -46,7 +47,11 @@ const Comments = ({videoId}) => {
   return (
     <Container>
         <NewComent>
-            <Avatar src={currUser.img}/>
+            <Avatar 
+            src={
+                currUser === null ? Youtube : currUser.img
+            }
+            />
             <Input placeholder='Add a comment...'/>
         </NewComent>
         {comments.map(comment=>(
