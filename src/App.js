@@ -30,16 +30,17 @@ const Wrapper = styled.div`
 function App() {
 
   const [darkMode, setDarkMode] = useState(true);
+  const [openn, setOpenn] = useState(false);
 
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
-            <Menu darkMode={darkMode} setDarkMode={setDarkMode} />
+            <Menu darkMode={darkMode} setDarkMode={setDarkMode} openn={openn} setOpenn={setOpenn} />
 
             <Main>
-              <Navbar />
+              <Navbar openn={openn} setOpenn={setOpenn} />
               <Wrapper>
                 <Routes>
                   <Route path="/">

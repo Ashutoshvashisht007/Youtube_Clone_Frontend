@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+import DensityMediumOutlinedIcon from '@mui/icons-material/DensityMediumOutlined';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import youtube from "../images/logo.png";
@@ -55,6 +56,25 @@ const Button = styled.button`
     color: #3ea6ff;
     font-weight: 500; 
     cursor: pointer;
+    @media (max-width: 1000px) {
+      visibility: hidden;
+    }
+`;
+const Button1 = styled.button`
+  visibility: hidden;
+  @media (max-width: 1000px) {
+    visibility: visible;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 15px;
+    background-color: transparent;
+    color: #3ea6ff;
+    font-weight: 500; 
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+  }
 `;
 
 const User = styled.div`
@@ -73,7 +93,7 @@ const Avatar = styled.img`
   background-color: #999;
 `;
 
-const Navbar = () => {
+const Navbar = ({openn, setOpenn}) => {
 
   const { currUser } = useSelector(state => state.user);
   let imgg;
@@ -94,6 +114,9 @@ const Navbar = () => {
     <>
     <Container>
       <Wrapper>
+        <Button1 onClick={() => setOpenn(!openn)}>
+          <DensityMediumOutlinedIcon/>
+        </Button1>
         <Search>
           <Input 
             placeholder='Search' 

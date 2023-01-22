@@ -13,3 +13,8 @@ export const lightTheme = {
     textSoft:"#606060",
     soft:"#f5f5f5",
 }
+
+export const res = {
+    mobile: '576px',
+    medium: '1000px',
+}

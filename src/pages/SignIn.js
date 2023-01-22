@@ -14,6 +14,9 @@ const Container = styled.div`
     justify-content: center;
     height: calc(100vh - 56px);
     color: ${({ theme }) => theme.text};
+    @media (max-width: 1000px) {
+        height: 100%;
+      }
 `;
 
 const Wrapper = styled.div`
@@ -78,7 +81,7 @@ const SignIn = () => {
         e.preventDefault();
         dispatch(loginStart());
         try{
-            const res = await axios.post("/api/authentication/signin", {name,password});
+            const res = await axios.post("http://localhost:4000/api/authentication/signin", {name,password});
             dispatch(loginSuccess(res.data));
             navigate('/');
         }
@@ -90,16 +93,41 @@ const SignIn = () => {
     const signinWithGoogle = async () => {
         dispatch(loginStart());
         await signInWithPopup(auth,provider).then((result) => {
-            axios.post("/api/authentication/google", {
+            axios.post("http://localhost:4000/api/authentication/google", {
                 name: result.user.displayName,
                 email: result.user.email,
                 img: result.user.photoURL,
             }).then((res) => {
-                dispatch(loginSuccess(res.data))
+                dispatch(loginSuccess(res.data));
+                navigate('/');
             })
         }).catch((error) => {
             dispatch(loginFailure(error));
         })
+    }
+
+    const handleSignUp = async () => {
+
+        try{
+            await axios.post("http://localhost:4000/api/authentication/signup", {
+            name,
+            email,
+            password
+        });
+        }
+        catch(err)
+        {
+            alert("Username or email already exists");
+        }
+        
+        Array.from(document.querySelectorAll("input")).forEach(
+            input => (input.value = "")
+          );
+          this.setState({
+            itemvalues: [{}]
+          });
+        document.getElementById("myForm").reset();
+        alert("Signup successful, click on sigin to login");
     }
 
   return (
@@ -127,25 +155,28 @@ const SignIn = () => {
             <Button onClick={signinWithGoogle}>Signin with Google</Button>
             <Title>Or</Title>
             <Input 
+                id="myForm"
                 placeholder='username'
                 onChange = {
                     e => setName(e.target.value)
                 }
             />
             <Input 
+                id="myForm"
                 placeholder='email'
                 onChange = {
                     e => setEmail(e.target.value)
                 }
             />
             <Input 
+                id="myForm"
                 type="password" 
                 placeholder="password"
                 onChange = {
                     e => setPassword(e.target.value)
                 }
             />
-            <Button>Sign up</Button>
+            <Button onClick={handleSignUp}>Sign up</Button>
         </Wrapper>
         <More>
             English(USA)

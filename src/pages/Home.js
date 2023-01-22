@@ -16,7 +16,7 @@ const Home = ({ type }) => {
     useEffect(()=> {
       const fetchVideos = async ()=>{
         // By using axios, we can send request to the API
-        const res = await axios.get(`/api/videos/${type}`);
+        const res = await axios.get(`http://localhost:4000/api/videos/${type}`);
         setVideos(res.data);
         
       }

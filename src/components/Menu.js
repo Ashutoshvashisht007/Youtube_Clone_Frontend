@@ -31,10 +31,23 @@ const Container = styled.div`
     position: sticky;
     top: 0;
     overflow-y: scroll;
+    @media (max-width: 1000px) {
+        position: ${({ openn }) => openn ? 'absolute' : 'fixed'};
+        z-index: ${({ openn }) => openn === true ? -1 : 0};
+        width: 30%;
+        height: ${({ openn }) => openn === true ? '100vh' : '100%'};
+      }
+      @media (max-width: 500px) {
+        position: ${({ openn }) => openn ? 'absolute' : 'fixed'};
+        z-index: ${({ openn }) => openn === true ? -1 : 0};
+        width: 50%;
+        height: ${({ openn }) => openn === true ? '100vh' : '100%'};
+      }
 `;
 
 const Wrapper = styled.div`
     padding: 18px 26px;
+      
 `;
 
 const Logo = styled.div`
@@ -88,7 +101,7 @@ const Button = styled.button`
 `;
 
 
-const Menu = ({ darkMode, setDarkMode }) => {
+const Menu = ({ darkMode, setDarkMode, openn, setOpenn }) => {
 
     const { currUser } = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -100,7 +113,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
     }
 
     return (
-        <Container>
+        <Container openn={openn}>
             <Wrapper>
                 <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                     <Logo>

@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:4000/",
   "name": "video_streaming_app",
   "version": "0.1.0",
   "private": true,
@@ -14,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
     "firebase": "^9.15.0",
+    "lodash": "^4.17.21",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.5",
