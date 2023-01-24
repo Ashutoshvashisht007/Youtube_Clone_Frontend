@@ -5,6 +5,9 @@ import Card from './Card';
 
 const Container = styled.div`
   flex: 2;
+  @media (max-width: 1000px){
+    display: none;
+  }
 `;
 
 const Recommendation = ({tags}) => {
@@ -13,7 +16,7 @@ const Recommendation = ({tags}) => {
 
     useEffect(() => {
         const fetchVideos = async () => {
-        const res = await axios.get(`http://localhost:4000/api/videos/tags?tags=${tags}`);
+        const res = await axios.get(`/api/videos/tags?tags=${tags}`);
         setVideos(res.data);
         };
         fetchVideos();

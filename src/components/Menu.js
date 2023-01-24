@@ -32,6 +32,7 @@ const Container = styled.div`
     top: 0;
     overflow-y: scroll;
     @media (max-width: 1000px) {
+        display: ${({videoOpen}) => videoOpen ? 'none' : "flex"};
         position: ${({ openn }) => openn ? 'absolute' : 'fixed'};
         z-index: ${({ openn }) => openn === true ? -1 : 0};
         width: 30%;
@@ -101,7 +102,7 @@ const Button = styled.button`
 `;
 
 
-const Menu = ({ darkMode, setDarkMode, openn, setOpenn }) => {
+const Menu = ({ darkMode, setDarkMode, openn, videoOpen, setvideoOpen }) => {
 
     const { currUser } = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -113,7 +114,7 @@ const Menu = ({ darkMode, setDarkMode, openn, setOpenn }) => {
     }
 
     return (
-        <Container openn={openn}>
+        <Container openn={openn} videoOpen={videoOpen} >
             <Wrapper>
                 <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                     <Logo>

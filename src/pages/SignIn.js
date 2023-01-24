@@ -81,7 +81,7 @@ const SignIn = () => {
         e.preventDefault();
         dispatch(loginStart());
         try{
-            const res = await axios.post("http://localhost:4000/api/authentication/signin", {name,password});
+            const res = await axios.post("/api/authentication/signin", {name,password});
             dispatch(loginSuccess(res.data));
             navigate('/');
         }
@@ -93,7 +93,7 @@ const SignIn = () => {
     const signinWithGoogle = async () => {
         dispatch(loginStart());
         await signInWithPopup(auth,provider).then((result) => {
-            axios.post("http://localhost:4000/api/authentication/google", {
+            axios.post("/api/authentication/google", {
                 name: result.user.displayName,
                 email: result.user.email,
                 img: result.user.photoURL,
@@ -109,7 +109,7 @@ const SignIn = () => {
     const handleSignUp = async () => {
 
         try{
-            await axios.post("http://localhost:4000/api/authentication/signup", {
+            await axios.post("/api/authentication/signup", {
             name,
             email,
             password

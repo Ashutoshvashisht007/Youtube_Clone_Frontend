@@ -25,27 +25,33 @@ const Main = styled.div`
 
 const Wrapper = styled.div`
   padding: 22px 96px;
+  @media (max-width: 1000px){
+    padding: 22px 8px;
+    min-height: 100vh
+  }
+
 `;
 
 function App() {
 
   const [darkMode, setDarkMode] = useState(true);
   const [openn, setOpenn] = useState(false);
+  const[videoOpen,setvideoOpen] = useState(false);
 
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container>
           <BrowserRouter>
-            <Menu darkMode={darkMode} setDarkMode={setDarkMode} openn={openn} setOpenn={setOpenn} />
+            <Menu darkMode={darkMode} setDarkMode={setDarkMode} openn={openn} videoOpen={videoOpen} setvideoOpen={setvideoOpen} />
 
             <Main>
-              <Navbar openn={openn} setOpenn={setOpenn} />
+              <Navbar openn={openn} setOpenn={setOpenn} videoOpen={videoOpen} />
               <Wrapper>
                 <Routes>
                   <Route path="/">
-                    <Route index element={<Home type="random"/>} />
-                    <Route path="trends" element={<Home type="trend"/>} />
+                    <Route index element={<Home type="random" videoOpen={videoOpen} setvideoOpen={setvideoOpen}/>} />
+                    <Route path="trends" element={<Home type="trend" />} />
                     <Route path="subscriptions" element={<Home type="sub"/>} />
                     <Route path="search" element={<Search/>} /> 
                     <Route path="signin" element={<SignIn/>} />

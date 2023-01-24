@@ -54,23 +54,23 @@ const Info = styled.div`
 `;
 
 
-const Card = ({type, video}) => {
+const Card = ({type, video, videoOpen, setvideoOpen}) => {
 
     const [channel,setChannel] = useState({});
     useEffect(()=> {
         const fetchChannel = async ()=>{
           // By using axios, we can send request to the API
-          const res = await axios.get(`http://localhost:4000/api/users/find/${video.userId}`);
+          const res = await axios.get(`/api/users/find/${video.userId}`);
 
           setChannel(res.data);
   
         }
         fetchChannel();
-      },[video.userId]);
+      },[video.userId,videoOpen]);
 
     return (
-        <Link to={`/video/${video._id}` }style={{ textDecoration: "none" }}>
-            <Container type = {type}>
+        <Link to={`/video/${video._id}` }style={{ textDecoration: "none" }} >
+            <Container type = {type} onClick={() => setvideoOpen(!videoOpen)}>
                 <Image type = {type} src={video.imgUrl} />
                 <Details type = {type}>
                     <ChannelImage type = {type} 

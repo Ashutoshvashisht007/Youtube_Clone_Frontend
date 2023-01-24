@@ -137,9 +137,9 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`http://localhost:4000/api/videos/find/${path}`);
-        const channelRes = await axios.get(`http://localhost:4000/api/users/find/${videoRes.data.userId}`);
-        const rep = await axios.put(`http://localhost:4000/api/videos/view/${path}`);
+        const videoRes = await axios.get(`/api/videos/find/${path}`);
+        const channelRes = await axios.get(`/api/users/find/${videoRes.data.userId}`);
+        const rep = await axios.put(`/api/videos/view/${path}`);
         setView(rep.data);
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
@@ -155,7 +155,7 @@ const Video = () => {
     }
     else
     {
-      await axios.put(`http://localhost:4000/api/users/like/${currentVideo._id}`);
+      await axios.put(`/api/users/like/${currentVideo._id}`);
       dispatch(like(currUser._id));
     }
   }
@@ -165,7 +165,7 @@ const Video = () => {
       alert("Sign in to dislike this video")
     }
     else{
-      await axios.put(`http://localhost:4000/api/users/dislike/${currentVideo._id}`);
+      await axios.put(`/api/users/dislike/${currentVideo._id}`);
       dispatch(dislike(currUser._id));
     }
     
@@ -177,7 +177,7 @@ const Video = () => {
       alert("Sign in to subscribe this video")
     }
     else{
-      currUser.subscribedUsers.includes(channel._id) ? await axios.put(`http://localhost:4000/api/users/unsub/${channel._id}`) : await axios.put(`http://localhost:4000/api/users/sub/${channel._id}`);
+      currUser.subscribedUsers.includes(channel._id) ? await axios.put(`/api/users/unsub/${channel._id}`) : await axios.put(`/api/users/sub/${channel._id}`);
       dispatch(subscription(channel._id));
     }
     

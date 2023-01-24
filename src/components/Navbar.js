@@ -63,7 +63,7 @@ const Button = styled.button`
 const Button1 = styled.button`
   visibility: hidden;
   @media (max-width: 1000px) {
-    visibility: visible;
+    visibility: ${({videoOpen}) => videoOpen ? 'hidden' : "visible"};
     display: flex;
     align-items: center;
     gap: 4px;
@@ -93,7 +93,7 @@ const Avatar = styled.img`
   background-color: #999;
 `;
 
-const Navbar = ({openn, setOpenn}) => {
+const Navbar = ({openn, setOpenn, videoOpen }) => {
 
   const { currUser } = useSelector(state => state.user);
   let imgg;
@@ -114,7 +114,7 @@ const Navbar = ({openn, setOpenn}) => {
     <>
     <Container>
       <Wrapper>
-        <Button1 onClick={() => setOpenn(!openn)}>
+        <Button1 videoOpen={videoOpen} onClick={() => setOpenn(!openn)}>
           <DensityMediumOutlinedIcon/>
         </Button1>
         <Search>
