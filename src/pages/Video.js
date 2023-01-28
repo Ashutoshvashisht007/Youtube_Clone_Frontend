@@ -148,7 +148,6 @@ const Video = () => {
         const rep = await axios.put(`/api/videos/view/${path}`);
         setView(rep.data);
         setChannel(channelRes.data);
-        console.log(videoRes.data);
       } catch (err) {
       }
     };
@@ -196,21 +195,57 @@ const Video = () => {
       <VideoWrapper>
         <VideoFrame src={video.videoUrl} controls />
       </VideoWrapper>
-      <Title>{currentVideo.title}</Title>
+      <Title>{video.title}</Title>
       <Details>
         <Info>
-          {view} views • {format(currentVideo.createdAt)}
+          {view} views • {format(video.createdAt)}
         </Info>
         <Buttons>
           <Button onClick={handleLike}>
             {
-              currUser === null ? <ThumbUpOutlinedIcon/> :  currentVideo.likes?.includes(currUser._id) ? <ThumbUpIcon/> : <ThumbUpOutlinedIcon/> 
+              (()=> {
+                if(currUser === null)
+                {
+                  return (<ThumbUpOutlinedIcon/> )
+                }
+                else
+                {
+                    if(currentVideo !== null && currentVideo.likes?.includes(currUser._id))
+                    {
+                      return (
+                      <ThumbUpIcon/>
+                      )
+                    }
+                    else
+                    {
+                      return (<ThumbUpOutlinedIcon/> )
+                    }
+                }
+              })() 
             }
-            {currentVideo.likes?.length}
+            {currentVideo === null ? video.likes?.length : currentVideo.likes?.length}
           </Button>
           <Button onClick={handleDislike}>
             {
-              currUser === null ? <ThumbDownOutlinedIcon/> : currentVideo.dislikes?.includes(currUser._id) ? <ThumbDownIcon/> : <ThumbDownOutlinedIcon/> 
+              (()=> {
+                if(currUser === null)
+                {
+                  return (<ThumbDownOutlinedIcon/> )
+                }
+                else
+                {
+                    if(currentVideo !== null && currentVideo.dislikes?.includes(currUser._id))
+                    {
+                      return (
+                      <ThumbDownIcon/>
+                      )
+                    }
+                    else
+                    {
+                      return (<ThumbDownOutlinedIcon/> )
+                    }
+                }
+              })() 
             }
            Dislike
           </Button>
@@ -229,7 +264,7 @@ const Video = () => {
           <ChannelDetail>
             <ChannelName>{channel.name}</ChannelName>
             <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-            <Description>{currentVideo.description}</Description>
+            <Description>{video.description}</Description>
           </ChannelDetail>
         </ChannelInfo>
         {
@@ -246,9 +281,9 @@ const Video = () => {
         }
       </Channel>
       <Hr/>
-      <Comments videoId={currentVideo._id} />
+      <Comments videoId={video._id} />
     </Content>
-    <Recommendation tags={currentVideo.tags} />
+    <Recommendation tags={video.tags} />
   </Container>
 }
 
