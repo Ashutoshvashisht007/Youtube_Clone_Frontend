@@ -20,7 +20,7 @@ const Home = ({ type, videoOpen, setvideoOpen }) => {
       {
         setvideoOpen(false);
       }
-    },[location.pathname]);
+    },[location.pathname,]);
 
     useEffect(()=> {
       const fetchVideos = async ()=>{

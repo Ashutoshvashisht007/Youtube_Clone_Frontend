@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
 import {auth , provider} from "../firebase";
@@ -73,6 +73,7 @@ const SignIn = () => {
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const { currUser } = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

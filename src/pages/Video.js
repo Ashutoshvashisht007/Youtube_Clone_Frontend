@@ -10,7 +10,7 @@ import Comments from '../components/Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { dislike, fetchSuccess, like } from "../redux/videoSlice";
+import { dislike, fetchStart, fetchSuccess, like } from "../redux/videoSlice";
 import { format } from 'timeago.js';
 import { subscription } from '../redux/userSlice';
 import Recommendation from '../components/Recommendation';
@@ -128,25 +128,33 @@ const VideoFrame = styled.video`
 
 const Video = () => {
   const { currentVideo } = useSelector((state) => state.video);
+  const { currUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  
   const path = useLocation().pathname.split("/")[2];
   const [channel,setChannel] = useState({});
   const [view,setView] = useState();
-  const { currUser } = useSelector((state) => state.user);
+  const [video,setVideo] = useState({});
+  
 
   useEffect(() => {
+    dispatch(fetchStart());
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(`/api/videos/find/${path}`);
+        setVideo(videoRes.data);
+        dispatch(fetchSuccess(videoRes.data));
         const channelRes = await axios.get(`/api/users/find/${videoRes.data.userId}`);
         const rep = await axios.put(`/api/videos/view/${path}`);
         setView(rep.data);
         setChannel(channelRes.data);
-        dispatch(fetchSuccess(videoRes.data));
-      } catch (err) {}
+        console.log(videoRes.data);
+      } catch (err) {
+      }
     };
     fetchData();
   }, [path, dispatch]);
+
 
   const handleLike = async ()=> {
     if(currUser === null)
@@ -186,7 +194,7 @@ const Video = () => {
   return <Container>
     <Content>
       <VideoWrapper>
-        <VideoFrame src={currentVideo.videoUrl} controls />
+        <VideoFrame src={video.videoUrl} controls />
       </VideoWrapper>
       <Title>{currentVideo.title}</Title>
       <Details>
